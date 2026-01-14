@@ -1,1 +1,440 @@
 
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana Celeste | El Universo en tus manos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        space: {
+                            900: '#050510', // Fondo muy oscuro
+                            800: '#0f172a',
+                        },
+                        neon: {
+                            cyan: '#22d3ee', // Cyan-400
+                            purple: '#818cf8', // Indigo-400
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Efecto para ocultar el scrollbar en el modal pero permitir scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Gradiente para simular el Hero Image sfumato */
+        .hero-overlay {
+            background: radial-gradient(circle at center, transparent 0%, #050510 90%);
+        }
+    </style>
+</head>
+<body class="bg-space-900 text-white font-sans antialiased selection:bg-neon-cyan selection:text-black">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-space-900/70 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer">
+                    <span class="text-2xl font-bold tracking-tighter text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#inicio" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                        <a href="#modelos" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Modelos</a>
+                        <a href="#mision" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Misión</a>
+                        <a href="#team" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                    </div>
+                </div>
+                <div>
+                    <!-- CTA PRINCIPAL -->
+                    <button onclick="openAppModal()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg shadow-cyan-500/30 transition transform hover:scale-105">
+                        ¡EMPIEZA A EXPLORAR!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-start overflow-hidden pt-20">
+        
+        <!-- Background Image Container con efecto FADE -->
+        <div class="absolute inset-0 z-0">
+            <!-- PLACEHOLDER IMAGEN HERO (La que generaste) -->
+            <img src="https://via.placeholder.com/1920x1080/111/fff?text=Hero+Image+Sfumato+Cosmos" alt="Space Background" class="w-full h-full object-cover opacity-80">
+            
+            <!-- Mascaras para sfumare los bordes al negro -->
+            <div class="absolute inset-0 bg-gradient-to-r from-space-900 via-space-900/50 to-transparent w-full h-full"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-transparent to-space-900 w-full h-full"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="md:w-2/3 lg:w-1/2">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                    El Universo <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">en tus manos.</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 font-light leading-relaxed">
+                    Transforma tu smartphone en un telescopio real. Combate la contaminación lumínica y redescubre el cielo desde tu casa, colegio o museo. Una experiencia phygital.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="openAppModal()" class="bg-white text-space-900 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-xl transition flex items-center justify-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        LANZAR APP WEB
+                    </button>
+                    <a href="#modelos" class="border border-white/30 hover:border-white hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg transition text-center backdrop-blur-sm">
+                        Construye tu Telescopio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISION / PITCH -->
+    <section id="mision" class="py-24 bg-space-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white">Hackeando el acceso al cielo</h2>
+                <p class="mt-4 text-gray-400">Democratizamos la astronomía con tecnología que ya tienes.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-neon-cyan/50 transition duration-300">
+                    <div class="w-12 h-12 bg-neon-cyan/20 rounded-lg flex items-center justify-center mb-6 text-neon-cyan">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Accesible</h3>
+                    <p class="text-gray-400 text-sm">Olvída los equipos de millones de pesos. Usamos impresión 3D low-cost y tu propio smartphone.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-neon-cyan/50 transition duration-300">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6 text-purple-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Experiencia Phygital</h3>
+                    <p class="text-gray-400 text-sm">Interacción real. Gira, apunta y enfoca físicamente. No es solo una app, es un instrumento.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-neon-cyan/50 transition duration-300">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-6 text-green-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Conciencia Ambiental</h3>
+                    <p class="text-gray-400 text-sm">Visualizamos lo invisible: la contaminación lumínica. Recuperemos la oscuridad de nuestros cielos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODELOS (DIY & MUSEO) -->
+    <section id="modelos" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- HEADER DIY -->
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <span class="text-neon-cyan font-bold uppercase tracking-wider text-sm">DIY & Educación</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Crea tu Ventana Celeste</h2>
+                </div>
+            </div>
+
+            <!-- GRID DIY -->
+            <div class="grid md:grid-cols-2 gap-8 mb-24">
+                <!-- Home Version -->
+                <div class="group relative bg-space-800 rounded-2xl overflow-hidden border border-white/10 hover:border-neon-cyan transition-all">
+                    <div class="h-64 overflow-hidden">
+                         <img src="https://via.placeholder.com/800x600/222/fff?text=Modelo+Hogar+DIY" alt="Home Version" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">Home Edition</h3>
+                        <p class="text-gray-400 mb-6">Usa tu smartphone y materiales accesibles. Perfecto para familias y hobbistas.</p>
+                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-neon-cyan pb-1 hover:text-neon-cyan transition">Ver Instrucciones de Construcción &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- School Version -->
+                <div class="group relative bg-space-800 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500 transition-all">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/800x600/222/fff?text=Modelo+Escuela+Kit" alt="School Version" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">School Edition</h3>
+                        <p class="text-gray-400 mb-6">Kit robusto diseñado para el aula. Fomenta el aprendizaje colaborativo.</p>
+                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-purple-500 pb-1 hover:text-purple-400 transition">Descargar Planos y Guía Docente &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCION MUSEO -->
+            <div class="relative rounded-3xl overflow-hidden border border-white/10">
+                <div class="absolute inset-0">
+                    <img src="https://via.placeholder.com/1600x600/000/333?text=Instalacion+Museografica" class="w-full h-full object-cover opacity-40">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+                </div>
+                <div class="relative p-12 md:p-16 md:w-2/3">
+                    <span class="text-purple-400 font-bold uppercase tracking-wider text-sm">Institucional</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mt-2 mb-6">Instalaciones Inmersivas Profesionales</h2>
+                    <p class="text-gray-300 text-lg mb-8">
+                        Soluciones de alto impacto para museos, planetarios y centros culturales. 
+                        Disponible en modalidad Mediada (con guía) y Autónoma (Kiosko interactivo).
+                    </p>
+                    <button onclick="openMuseumModal()" class="bg-white text-black font-bold py-3 px-8 rounded-lg hover:bg-gray-200 transition">
+                        COTIZAR PARA MI INSTITUCIÓN
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="py-24 bg-space-900 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12">Nuestro Equipo</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
+                <!-- Member 1 -->
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=AB" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Alessio Bellino</h4>
+                    <p class="text-xs text-neon-cyan uppercase mt-1">Founder & Vision</p>
+                </div>
+                 <!-- Member 2 -->
+                 <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=FM" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Francisco Maureira</h4>
+                    <p class="text-xs text-neon-cyan uppercase mt-1">Head of Phygital</p>
+                </div>
+                 <!-- Member 3 -->
+                 <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=GB" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Gonzalo Barrueto</h4>
+                    <p class="text-xs text-neon-cyan uppercase mt-1">Simulation Eng.</p>
+                </div>
+                 <!-- Member 4 -->
+                 <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=ES" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Eduardo Sepulveda</h4>
+                    <p class="text-xs text-neon-cyan uppercase mt-1">Lead Developer</p>
+                </div>
+                 <!-- Member 5 -->
+                 <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-purple-500 transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=SV" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Sergio Vásquez</h4>
+                    <p class="text-xs text-purple-400 uppercase mt-1">Scientific Advisor</p>
+                </div>
+                 <!-- Member 6 -->
+                 <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-purple-500 transition">
+                        <img src="https://via.placeholder.com/150/333/fff?text=LV" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-white">Leonardo Vanzi</h4>
+                    <p class="text-xs text-purple-400 uppercase mt-1">Scientific Sup.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section class="py-12 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm uppercase tracking-widest mb-8">Respaldado por</p>
+            <div class="flex flex-wrap justify-center gap-12 items-center opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500">
+                <!-- Logos placeholder -->
+                <img src="https://via.placeholder.com/150x50?text=MIM" class="h-10">
+                <img src="https://via.placeholder.com/150x50?text=PUC+Ingenieria" class="h-10">
+                <img src="https://via.placeholder.com/150x50?text=ESO+Gov" class="h-10">
+                <img src="https://via.placeholder.com/150x50?text=Planetario" class="h-10">
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-space-900 border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
+                    <p class="text-gray-500 text-sm mt-2">Open Source Project 2025</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Github</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Instagram</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- APP LAUNCH MODAL -->
+    <div id="appModal" class="fixed inset-0 z-[60] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeAppModal()"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
+            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-2xl w-full p-8 shadow-2xl transform transition-all">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold text-white mb-2">Selecciona tu Telescopio</h3>
+                    <p class="text-gray-400">Para iniciar la app, necesitamos saber qué versión estás utilizando.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Option A -->
+                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-neon-cyan transition group text-center">
+                        <div class="text-4xl mb-4">🏠</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Versión Hogar</h4>
+                        <button class="w-full bg-neon-cyan hover:bg-cyan-300 text-black font-bold py-3 px-4 rounded-lg mb-4 transition">
+                            CONECTAR
+                        </button>
+                        <a href="#modelos" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-neon-cyan block">
+                            ¿No tienes telescopio? <br>Mira cómo construirlo aquí
+                        </a>
+                    </div>
+
+                    <!-- Option B -->
+                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-purple-500 transition group text-center">
+                        <div class="text-4xl mb-4">🏫</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Versión Colegio</h4>
+                        <button class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded-lg mb-4 transition">
+                            CONECTAR
+                        </button>
+                        <a href="#modelos" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-purple-400 block">
+                            ¿Tu colegio no tiene el kit? <br>Descarga los planos aquí
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Close Button -->
+                <button onclick="closeAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MUSEUM CONTACT MODAL -->
+    <div id="museumModal" class="fixed inset-0 z-[60] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeMuseumModal()"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
+            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-lg w-full p-8 shadow-2xl overflow-y-auto max-h-screen no-scrollbar">
+                
+                <div class="text-center mb-6">
+                    <span class="text-purple-400 text-xs font-bold tracking-widest uppercase">Institucional</span>
+                    <h3 class="text-2xl font-bold text-white mt-2">Lleva Ventana Celeste a tu Museo</h3>
+                    <p class="text-gray-400 text-sm mt-2">Completa este formulario y nuestro equipo de integración te contactará.</p>
+                </div>
+
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
+                        <input type="text" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Correo Institucional</label>
+                        <input type="email" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="nombre@museo.cl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Institución / Organización</label>
+                        <input type="text" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Ej. Museo de Historia Natural">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Interés Principal</label>
+                        <select class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
+                            <option>Instalación Mediada (Guiada)</option>
+                            <option>Instalación Autónoma (Kiosko)</option>
+                            <option>Talleres Educativos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje Adicional</label>
+                        <textarea rows="3" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Cuéntanos sobre tu espacio..."></textarea>
+                    </div>
+
+                    <button type="button" onclick="closeMuseumModal()" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition mt-4">
+                        ENVIAR SOLICITUD
+                    </button>
+                </form>
+
+                <!-- Close Button -->
+                <button onclick="closeMuseumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // APP MODAL LOGIC
+        const appModal = document.getElementById('appModal');
+
+        function openAppModal() {
+            appModal.classList.remove('hidden');
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAppModal() {
+            appModal.classList.add('hidden');
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // MUSEUM MODAL LOGIC
+        const museumModal = document.getElementById('museumModal');
+
+        function openMuseumModal() {
+            museumModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMuseumModal() {
+            museumModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modals on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeAppModal();
+                closeMuseumModal();
+            }
+        });
+    </script>
+</body>
+</html>
