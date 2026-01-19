@@ -5,7 +5,7 @@
     "source": "articles/contaminacion-luminica.md",
     "gallery": [
       "articles/contaminacion-luminica/1.jpg",
-      "articles/contaminacion-luminica/2.jpg",
+      "articles/contaminacion-luminica/2.jpg"
     ]
   },
   {
@@ -14,9 +14,7 @@
     "source": "articles/tutorial-3d.md",
     "gallery": [
       "articles/tutorial-3d/1.jpg",
-      "articles/tutorial-3d/2.jpg",
-      "articles/tutorial-3d/3.jpg",
-      "articles/tutorial-3d/4.jpg"
+      "articles/tutorial-3d/2.jpg"
     ]
   },
   {
@@ -34,7 +32,7 @@
     "source": "articles/taller-mim.md",
     "gallery": [
       "articles/taller-mim/1.jpg",
-      "articles/taller-mim/2.jpg",
+      "articles/taller-mim/2.jpg"
     ]
   },
   {
@@ -43,7 +41,7 @@
     "source": "articles/lanzamiento-beta.md",
     "gallery": [
       "articles/lanzamiento-beta/1.jpg",
-      "articles/lanzamiento-beta/2.jpg",
+      "articles/lanzamiento-beta/2.jpg"
     ]
   }
 ]
