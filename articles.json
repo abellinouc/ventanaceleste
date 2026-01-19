@@ -1,0 +1,54 @@
+[
+  {
+    "title": "Hackeando la contaminación lumínica",
+    "coverImg": "articles/contaminacion-luminica/cover.jpg",
+    "source": "articles/contaminacion-luminica.md",
+    "gallery": [
+      "articles/contaminacion-luminica/1.jpg",
+      "articles/contaminacion-luminica/2.jpg",
+      "articles/contaminacion-luminica/3.jpg"
+    ]
+  },
+  {
+    "title": "Cómo imprimir tu telescopio en 3D",
+    "coverImg": "articles/tutorial-3d/cover.jpg",
+    "source": "articles/tutorial-3d.md",
+    "gallery": [
+      "articles/tutorial-3d/1.jpg",
+      "articles/tutorial-3d/2.jpg",
+      "articles/tutorial-3d/3.jpg",
+      "articles/tutorial-3d/4.jpg"
+    ]
+  },
+  {
+    "title": "Nueva colaboración con ESO",
+    "coverImg": "articles/colaboracion-eso/cover.jpg",
+    "source": "articles/colaboracion-eso.md",
+    "gallery": [
+      "articles/colaboracion-eso/1.jpg",
+      "articles/colaboracion-eso/2.jpg"
+    ]
+  },
+  {
+    "title": "Taller en Museo MIM",
+    "coverImg": "articles/taller-mim/cover.jpg",
+    "source": "articles/taller-mim.md",
+    "gallery": [
+      "articles/taller-mim/1.jpg",
+      "articles/taller-mim/2.jpg",
+      "articles/taller-mim/3.jpg",
+      "articles/taller-mim/4.jpg",
+      "articles/taller-mim/5.jpg"
+    ]
+  },
+  {
+    "title": "Lanzamiento de la versión Beta",
+    "coverImg": "articles/lanzamiento-beta/cover.jpg",
+    "source": "articles/lanzamiento-beta.md",
+    "gallery": [
+      "articles/lanzamiento-beta/1.jpg",
+      "articles/lanzamiento-beta/2.jpg",
+      "articles/lanzamiento-beta/3.jpg"
+    ]
+  }
+]
