@@ -256,7 +256,7 @@
                     article.gallery.forEach(imgSrc => {
                         const imgDiv = document.createElement('div');
                         imgDiv.className = "rounded-xl overflow-hidden border border-white/10 h-64 shadow-lg";
-                        imgDiv.innerHTML = `<img src="${imgSrc}" class="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer" onclick="window.open(this.src, '_blank')">`;
+                        imgDiv.innerHTML = `<img src="${imgSrc}" class="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer">`;
                         galleryContainer.appendChild(imgDiv);
                     });
                 } else {

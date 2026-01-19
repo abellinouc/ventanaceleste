@@ -6,7 +6,6 @@
     "gallery": [
       "articles/contaminacion-luminica/1.jpg",
       "articles/contaminacion-luminica/2.jpg",
-      "articles/contaminacion-luminica/3.jpg"
     ]
   },
   {
@@ -36,9 +35,6 @@
     "gallery": [
       "articles/taller-mim/1.jpg",
       "articles/taller-mim/2.jpg",
-      "articles/taller-mim/3.jpg",
-      "articles/taller-mim/4.jpg",
-      "articles/taller-mim/5.jpg"
     ]
   },
   {
@@ -48,7 +44,6 @@
     "gallery": [
       "articles/lanzamiento-beta/1.jpg",
       "articles/lanzamiento-beta/2.jpg",
-      "articles/lanzamiento-beta/3.jpg"
     ]
   }
 ]
