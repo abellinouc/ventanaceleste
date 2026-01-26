@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Marked.js per il futuro parsing del Markdown (necessario per articles.html, utile averlo in cache) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -17,8 +20,9 @@
                     },
                     colors: {
                         space: {
-                            900: '#050510', // Fondo muy oscuro
+                            900: '#050510', // Fondo molto scuro
                             800: '#0f172a',
+                            700: '#1e293b',
                         },
                         neon: {
                             cyan: '#22d3ee', // Cyan-400
@@ -30,19 +34,20 @@
         }
     </script>
     <style>
-        /* Efecto para ocultar el scrollbar en el modal pero permitir scroll */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hero-overlay { background: radial-gradient(circle at center, transparent 0%, #050510 90%); }
         
-        /* Gradiente para simular el Hero Image sfumato */
-        .hero-overlay {
-            background: radial-gradient(circle at center, transparent 0%, #050510 90%);
+        /* Loader per il form */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid #22d3ee;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-space-900 text-white font-sans antialiased selection:bg-neon-cyan selection:text-black">
@@ -52,68 +57,88 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 cursor-pointer">
-                    <span class="text-2xl font-bold tracking-tighter text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
+                    <a href="#inicio"><span class="text-2xl font-bold tracking-tighter text-white">Ventana<span class="text-neon-cyan">Celeste</span></span></a>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#inicio" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                        <a href="#noticias" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Noticias</a>
                         <a href="#modelos" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Modelos</a>
-                        <a href="#mision" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Misión</a>
                         <a href="#team" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Team</a>
-                    </div>
+						<a href="#contacto" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Contacto</a>
+                        
+					</div>
                 </div>
                 <div>
-                    <!-- CTA PRINCIPAL -->
                     <button onclick="openAppModal()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg shadow-cyan-500/30 transition transform hover:scale-105">
-                        ¡EMPIEZA A EXPLORAR!
+                        ¡EMPIEZA!
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-<!-- HERO SECTION -->
-<section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-20 bg-space-900">
-    
-    <div class="absolute inset-0 z-0">
-        <img src="assets/space-background.webp" alt="Space Background" 
-             class="w-full h-full object-cover brightness-50">
-        <div class="absolute inset-0 bg-gradient-to-r from-space-900 via-transparent to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-transparent to-transparent"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div class="flex flex-col md:flex-row items-stretch justify-between gap-8 md:gap-16">
-            
-            <div class="w-full md:w-2/3 py-10">
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-                    El Universo <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">en tus manos.</span>
-                </h1>
-                <p class="text-xl text-gray-300 mb-8 font-light leading-relaxed max-w-xl">
-                    Transforma tu smartphone en un telescopio real. Combate la contaminación lumínica y redescubre el cielo desde tu casa, colegio o museo. Una experiencia phygital.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button onclick="openAppModal()" class="bg-white text-space-900 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-xl transition flex items-center justify-center gap-2">
-                        LANZAR APP WEB
-                    </button>
-                    <a href="#modelos" class="border border-white/30 hover:border-white hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg transition text-center backdrop-blur-sm">
-                        Construye tu Telescopio
-                    </a>
-                </div>
-            </div>
-    
-            <div class="hidden md:flex md:w-1/3 self-stretch py-10">
-                <div class="relative w-full h-full min-h-[400px] overflow-hidden">
-                    <img src="assets/person-telescope.webp" alt="Person Telescope" 
-                         class="absolute inset-0 w-full h-full object-cover object-center">
-                </div>
-            </div>
-    
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-20 bg-space-900">
+        <div class="absolute inset-0 z-0">
+            <!-- Placeholder image se l'asset non esiste -->
+            <img src="assets/space-background.webp" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'" alt="Space Background" 
+                 class="w-full h-full object-cover brightness-50">
+            <div class="absolute inset-0 bg-gradient-to-r from-space-900 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-transparent to-transparent"></div>
         </div>
-    </div>
-</section>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="flex flex-col md:flex-row items-stretch justify-between gap-8 md:gap-16">
+                <div class="w-full md:w-2/3 py-10">
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                        El Universo <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">en tus manos.</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 font-light leading-relaxed max-w-xl">
+                        Transforma tu smartphone en un telescopio real. Combate la contaminación lumínica y redescubre el cielo.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openAppModal()" class="bg-white text-space-900 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-xl transition flex items-center justify-center gap-2">
+                            LANZAR APP WEB
+                        </button>
+                        <a href="#modelos" class="border border-white/30 hover:border-white hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg transition text-center backdrop-blur-sm">
+                            Construye tu Telescopio
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex md:w-1/3 self-stretch py-10">
+                    <div class="relative w-full h-full min-h-[400px] overflow-hidden rounded-2xl">
+                        <img src="assets/person-telescope.webp" onerror="this.src='https://images.unsplash.com/photo-1533206260133-f542289eb9cc?q=80&w=1740&auto=format&fit=crop'" alt="Person Telescope" 
+                             class="absolute inset-0 w-full h-full object-cover object-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: NOTICIAS / ARTICLES -->
+    <section id="noticias" class="py-16 bg-space-800 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Últimas Noticias</h2>
+                    <p class="text-gray-400 mt-2">Actualizaciones del proyecto y descubrimientos.</p>
+                </div>
+                <a href="articles.html" id="view-all-btn" class="hidden text-neon-cyan hover:text-white transition text-sm font-bold uppercase tracking-wider">
+                    Ver todas &rarr;
+                </a>
+            </div>
+
+            <!-- Container for dynamic articles -->
+            <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Loader placeholder -->
+                <div class="col-span-full text-center py-10 text-gray-500">
+                    Cargando artículos...
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- MISION / PITCH -->
     <section id="mision" class="py-24 bg-space-900 relative">
@@ -155,8 +180,6 @@
     <!-- MODELOS (DIY & MUSEO) -->
     <section id="modelos" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- HEADER DIY -->
             <div class="flex items-center justify-between mb-12">
                 <div>
                     <span class="text-neon-cyan font-bold uppercase tracking-wider text-sm">DIY & Educación</span>
@@ -164,7 +187,6 @@
                 </div>
             </div>
 
-            <!-- GRID DIY -->
             <div class="grid md:grid-cols-2 gap-8 mb-24">
                 <!-- Home Version -->
                 <div class="group relative bg-space-800 rounded-2xl overflow-hidden border border-white/10 hover:border-neon-cyan transition-all">
@@ -174,7 +196,7 @@
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Home Edition</h3>
                         <p class="text-gray-400 mb-6">Usa tu smartphone y materiales accesibles. Perfecto para familias y hobbistas.</p>
-                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-neon-cyan pb-1 hover:text-neon-cyan transition">Ver Instrucciones de Construcción &rarr;</a>
+                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-neon-cyan pb-1 hover:text-neon-cyan transition">Ver Instrucciones &rarr;</a>
                     </div>
                 </div>
 
@@ -186,7 +208,7 @@
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">School Edition</h3>
                         <p class="text-gray-400 mb-6">Kit robusto diseñado para el aula. Fomenta el aprendizaje colaborativo.</p>
-                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-purple-500 pb-1 hover:text-purple-400 transition">Descargar Planos y Guía Docente &rarr;</a>
+                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-purple-500 pb-1 hover:text-purple-400 transition">Descargar Planos &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -199,17 +221,15 @@
                 </div>
                 <div class="relative p-12 md:p-16 md:w-2/3">
                     <span class="text-purple-400 font-bold uppercase tracking-wider text-sm">Institucional</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-white mt-2 mb-6">Instalaciones Inmersivas Profesionales</h2>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mt-2 mb-6">Instalaciones Inmersivas</h2>
                     <p class="text-gray-300 text-lg mb-8">
-                        Soluciones de alto impacto para museos, planetarios y centros culturales. 
-                        Disponible en modalidad Mediada (con guía) y Autónoma (Kiosko interactivo).
+                        Soluciones de alto impacto para museos, planetarios y centros culturales.
                     </p>
                     <button onclick="openMuseumModal()" class="bg-white text-black font-bold py-3 px-8 rounded-lg hover:bg-gray-200 transition">
-                        CONTÁCTANOS PARA MAS INFORMACIÓN
+                        CONTÁCTANOS
                     </button>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -217,9 +237,8 @@
     <section id="team" class="py-24 bg-space-900 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-white mb-12">Nuestro Equipo</h2>
-            
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                <!-- Member 1 -->
+                 <!-- Member 1 -->
                 <div class="group">
                     <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
                         <img src="https://via.placeholder.com/150/333/fff?text=AB" class="w-full h-full object-cover">
@@ -271,6 +290,54 @@
         </div>
     </section>
 
+    <!-- NEW SECTION: CONTACTO FORM -->
+    <section id="contacto" class="py-24 bg-space-800 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-white">Contáctanos</h2>
+                <p class="text-gray-400 mt-2">¿Tienes dudas o quieres colaborar? Escríbenos.</p>
+            </div>
+
+            <div class="bg-space-900 border border-white/10 rounded-2xl p-8 shadow-xl">
+                
+                <!-- Feedback di successo -->
+                <div id="main-form-confirmation" class="hidden text-center py-10">
+                    <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">¡Mensaje Enviado!</h3>
+                    <p class="text-gray-400">Gracias por escribirnos. Te responderemos pronto.</p>
+                </div>
+
+                <!-- Modulo Principale -->
+                <form id="main-contact-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Nombre</label>
+                            <!-- TODO: Sostituisci name="entry.XXXXXX" con l'ID reale di Google Form per il NOME -->
+                            <input type="text" name="entry.123456" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Correo Electrónico</label>
+                            <!-- TODO: Sostituisci name="entry.YYYYYY" con l'ID reale di Google Form per EMAIL -->
+                            <input type="email" name="entry.789012" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje</label>
+                        <!-- TODO: Sostituisci name="entry.ZZZZZZ" con l'ID reale di Google Form per MESSAGGIO -->
+                        <textarea name="entry.345678" rows="4" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-neon-cyan to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-bold py-4 rounded-lg transition transform hover:scale-[1.01] flex items-center justify-center">
+                        <span id="main-btn-text">ENVIAR MENSAJE</span>
+                        <div id="main-btn-loader" class="loader hidden ml-2"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- PARTNERS -->
     <section class="py-12 bg-black border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 text-center">
@@ -292,12 +359,11 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
                     <span class="text-xl font-bold text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
-                    <p class="text-gray-500 text-sm mt-2">Open Source Project 2025</p>
+                    <p class="text-gray-500 text-sm mt-2">El Universo en tus manos.</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white">Github</a>
                     <a href="#" class="text-gray-400 hover:text-white">Instagram</a>
-                    <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+                    <a href="#contacto" class="text-gray-400 hover:text-white">Contacto</a>
                 </div>
             </div>
         </div>
@@ -307,142 +373,199 @@
 
     <!-- APP LAUNCH MODAL -->
     <div id="appModal" class="fixed inset-0 z-[60] hidden">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeAppModal()"></div>
-        
-        <!-- Content -->
         <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
-            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-2xl w-full p-8 shadow-2xl transform transition-all">
+            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-2xl w-full p-8 shadow-2xl">
                 <div class="text-center mb-8">
                     <h3 class="text-3xl font-bold text-white mb-2">Selecciona tu Telescopio</h3>
-                    <p class="text-gray-400">Para iniciar la app, necesitamos saber qué versión estás utilizando.</p>
+                    <p class="text-gray-400">Elige tu versión para conectar.</p>
                 </div>
-                
                 <div class="grid md:grid-cols-2 gap-6">
                     <!-- Option A -->
-                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-neon-cyan transition group text-center">
+                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-neon-cyan transition text-center cursor-pointer" onclick="alert('Conectando a App Web...')">
                         <div class="text-4xl mb-4">🏠</div>
-                        <h4 class="text-xl font-bold text-white mb-4">Versión Hogar</h4>
-                        <button class="w-full bg-neon-cyan hover:bg-cyan-300 text-black font-bold py-3 px-4 rounded-lg mb-4 transition">
-                            CONECTAR
-                        </button>
-                        <a href="#modelos" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-neon-cyan block">
-                            ¿No tienes telescopio? <br>Mira cómo construirlo aquí
-                        </a>
+                        <h4 class="text-xl font-bold text-white">Versión Hogar</h4>
                     </div>
-
                     <!-- Option B -->
-                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-purple-500 transition group text-center">
+                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-purple-500 transition text-center cursor-pointer" onclick="alert('Conectando a App Web...')">
                         <div class="text-4xl mb-4">🏫</div>
-                        <h4 class="text-xl font-bold text-white mb-4">Versión Colegio</h4>
-                        <button class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded-lg mb-4 transition">
-                            CONECTAR
-                        </button>
-                        <a href="#modelos" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-purple-400 block">
-                            ¿Tu colegio no tiene el kit? <br>Descarga los planos aquí
-                        </a>
+                        <h4 class="text-xl font-bold text-white">Versión Colegio</h4>
                     </div>
                 </div>
-
-                <!-- Close Button -->
-                <button onclick="closeAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
             </div>
         </div>
     </div>
 
     <!-- MUSEUM CONTACT MODAL -->
     <div id="museumModal" class="fixed inset-0 z-[60] hidden">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeMuseumModal()"></div>
-        
-        <!-- Content -->
         <div class="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
             <div class="bg-space-800 border border-white/10 rounded-2xl max-w-lg w-full p-8 shadow-2xl overflow-y-auto max-h-screen no-scrollbar">
                 
                 <div class="text-center mb-6">
                     <span class="text-purple-400 text-xs font-bold tracking-widest uppercase">Institucional</span>
                     <h3 class="text-2xl font-bold text-white mt-2">Lleva Ventana Celeste a tu Museo</h3>
-                    <p class="text-gray-400 text-sm mt-2">Completa este formulario y nuestro equipo de integración te contactará.</p>
                 </div>
 
-                <form class="space-y-4">
+                <div id="museum-form-confirmation" class="hidden text-center py-10">
+                     <h3 class="text-xl font-bold text-white">¡Solicitud Enviada!</h3>
+                     <p class="text-gray-400">El equipo de integración te contactará.</p>
+                     <button onclick="closeMuseumModal()" class="mt-4 text-neon-cyan hover:underline">Cerrar</button>
+                </div>
+
+                <form id="museum-contact-form" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Ej. Juan Pérez">
+                        <!-- TODO: ID Google Form -->
+                        <input type="text" name="entry.111111" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Correo Institucional</label>
-                        <input type="email" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="nombre@museo.cl">
+                        <!-- TODO: ID Google Form -->
+                        <input type="email" name="entry.222222" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Institución / Organización</label>
-                        <input type="text" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Ej. Museo de Historia Natural">
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Institución</label>
+                        <!-- TODO: ID Google Form -->
+                        <input type="text" name="entry.333333" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Interés Principal</label>
-                        <select class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
-                            <option>Instalación Mediada (Guiada)</option>
-                            <option>Instalación Autónoma (Kiosko)</option>
-                            <option>Talleres Educativos</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje Adicional</label>
-                        <textarea rows="3" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition" placeholder="Cuéntanos sobre tu espacio..."></textarea>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje</label>
+                        <!-- TODO: ID Google Form -->
+                        <textarea name="entry.444444" rows="3" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition"></textarea>
                     </div>
 
-                    <button type="button" onclick="closeMuseumModal()" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition mt-4">
-                        ENVIAR SOLICITUD
+                    <button type="submit" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition mt-4 flex items-center justify-center">
+                        <span id="museum-btn-text">ENVIAR SOLICITUD</span>
+                        <div id="museum-btn-loader" class="loader hidden ml-2 border-slate-600 border-t-black"></div>
                     </button>
                 </form>
 
-                <!-- Close Button -->
-                <button onclick="closeMuseumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeMuseumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
             </div>
         </div>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // APP MODAL LOGIC
+        // --- MODAL LOGIC ---
         const appModal = document.getElementById('appModal');
-
-        function openAppModal() {
-            appModal.classList.remove('hidden');
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeAppModal() {
-            appModal.classList.add('hidden');
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
-        }
-
-        // MUSEUM MODAL LOGIC
         const museumModal = document.getElementById('museumModal');
 
-        function openMuseumModal() {
-            museumModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMuseumModal() {
-            museumModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modals on ESC key
+        function openAppModal() { appModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        function closeAppModal() { appModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        function openMuseumModal() { museumModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        function closeMuseumModal() { museumModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeAppModal();
-                closeMuseumModal();
-            }
+            if (event.key === "Escape") { closeAppModal(); closeMuseumModal(); }
         });
+
+        // --- ARTICLES / NEWS LOGIC ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById('articles-container');
+            const viewAllBtn = document.getElementById('view-all-btn');
+
+            fetch('articles.json')
+                .then(response => {
+                    if (!response.ok) throw new Error("No se encontró articles.json");
+                    return response.json();
+                })
+                .then(articles => {
+                    // Invertir orden (último primero)
+                    const reversedArticles = articles.reverse();
+                    
+                    // Mostrar solo los primeros 4
+                    const previewArticles = reversedArticles.slice(0, 4);
+                    
+                    container.innerHTML = ''; // Limpiar loader
+
+                    previewArticles.forEach(article => {
+                        // Limpiar extensión .md para la URL amigable
+                        const slug = article.source.split('/').pop().replace('.md', '');
+                        
+                        const card = document.createElement('div');
+                        card.className = "group relative bg-space-700 rounded-xl overflow-hidden border border-white/5 hover:border-neon-cyan/50 transition-all duration-300 hover:-translate-y-1 shadow-lg";
+                        card.innerHTML = `
+                            <a href="articles.html?article=${slug}" class="block h-full">
+                                <div class="h-48 overflow-hidden">
+                                    <img src="${article.coverImg}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold text-white group-hover:text-neon-cyan transition leading-tight mb-2">${article.title}</h3>
+                                    <span class="text-xs text-gray-500 uppercase tracking-widest">Leer más &rarr;</span>
+                                </div>
+                            </a>
+                        `;
+                        container.appendChild(card);
+                    });
+
+                    // Si hay más de 4, mostrar botón "Ver todas"
+                    if (reversedArticles.length > 4) {
+                        viewAllBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error cargando noticias:', error);
+                    container.innerHTML = `
+                        <div class="col-span-full text-center p-8 bg-white/5 rounded-lg border border-red-500/30">
+                            <p class="text-gray-400">No hay noticias disponibles por el momento.</p>
+                            <small class="text-gray-600">${error.message}</small>
+                        </div>
+                    `;
+                });
+        });
+
+        // --- GOOGLE FORMS LOGIC ---
+        // Función genérica para enviar forms
+        function setupGoogleForm(formId, confirmationId, btnTextId, loaderId, googleFormUrl) {
+            const form = document.getElementById(formId);
+            const confirmation = document.getElementById(confirmationId);
+            const btnText = document.getElementById(btnTextId);
+            const loader = document.getElementById(loaderId);
+
+            if(!form) return;
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                // UI Loading state
+                btnText.style.display = "none";
+                loader.style.display = "block";
+                
+                const formData = new FormData(form);
+
+                fetch(googleFormUrl, {
+                    method: "POST",
+                    body: formData,
+                    mode: "no-cors" // Importante para Google Forms
+                })
+                .then(() => {
+                    // Success UI
+                    form.style.display = "none";
+                    confirmation.style.display = "block";
+                    form.reset();
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Hubo un error al enviar. Por favor intenta nuevamente.");
+                    // Restore UI
+                    btnText.style.display = "block";
+                    loader.style.display = "none";
+                });
+            });
+        }
+
+        // Configurar Formulario Principal
+        // REEMPLAZAR 'NOMBREFORM' CON LA URL DE ACCIÓN DE GOOGLE FORM (ej: https://docs.google.com/forms/u/0/d/e/.../formResponse)
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/TU_ID_DE_GOOGLE_FORM/formResponse";
+        
+        setupGoogleForm("main-contact-form", "main-form-confirmation", "main-btn-text", "main-btn-loader", GOOGLE_FORM_URL);
+        
+        // Configurar Formulario Museo (Podría ser el mismo URL o uno diferente)
+        setupGoogleForm("museum-contact-form", "museum-form-confirmation", "museum-btn-text", "museum-btn-loader", GOOGLE_FORM_URL);
+
     </script>
 </body>
 </html>
