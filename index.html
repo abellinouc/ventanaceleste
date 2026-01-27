@@ -494,8 +494,16 @@
                     return response.json();
                 })
                 .then(articles => {
-                    // Invertir orden (último primero)
-                    const reversedArticles = articles.reverse();
+                    /* ORDENADO POR ORDEN EN JSON */
+                    // // Invertir orden (último primero)
+                    // const reversedArticles = articles.reverse();
+
+                    /* ODERNADO POR FECHA */
+                    const reversedArticles = articles.sort((a, b) => {
+                        const dateA = new Date(a.publishDate.split('/').reverse().join('-'));
+                        const dateB = new Date(b.publishDate.split('/').reverse().join('-'));
+                        return dateB - dateA; // Descendente
+                    });
                     
                     // Mostrar solo los primeros 4
                     const previewArticles = reversedArticles.slice(0, 4);
@@ -514,6 +522,7 @@
                                     <img src="${article.coverImg}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
                                 </div>
                                 <div class="p-6">
+                                    <div class="text-[10px] font-bold text-neon-cyan/60 uppercase tracking-[0.2em] mb-2">${article.publishDate || ''}</div>
                                     <h3 class="text-lg font-bold text-white group-hover:text-neon-cyan transition leading-tight mb-2">${article.title}</h3>
                                     <span class="text-xs text-gray-500 uppercase tracking-widest">Leer más &rarr;</span>
                                 </div>

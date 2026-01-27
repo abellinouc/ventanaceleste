@@ -6,7 +6,8 @@
     "gallery": [
       "articles/contaminacion-luminica/1.jpg",
       "articles/contaminacion-luminica/2.jpg"
-    ]
+    ],
+    "publishDate": "25/01/2026"
   },
   {
     "title": "Cómo imprimir tu telescopio en 3D",
@@ -15,7 +16,8 @@
     "gallery": [
       "articles/tutorial-3d/1.jpg",
       "articles/tutorial-3d/2.jpg"
-    ]
+    ],
+    "publishDate": "22/01/2026"
   },
   {
     "title": "Nueva colaboración con ESO",
@@ -24,7 +26,8 @@
     "gallery": [
       "articles/colaboracion-eso/1.jpg",
       "articles/colaboracion-eso/2.jpg"
-    ]
+    ],
+    "publishDate": "20/01/2026"
   },
   {
     "title": "Taller en Museo MIM",
@@ -33,7 +36,8 @@
     "gallery": [
       "articles/taller-mim/1.jpg",
       "articles/taller-mim/2.jpg"
-    ]
+    ],
+    "publishDate": "18/01/2026"
   },
   {
     "title": "Lanzamiento de la versión Beta",
@@ -42,6 +46,7 @@
     "gallery": [
       "articles/lanzamiento-beta/1.jpg",
       "articles/lanzamiento-beta/2.jpg"
-    ]
+    ],
+    "publishDate": "15/01/2026"
   }
 ]
