@@ -1,5 +1,15 @@
 [
   {
+    "title": "Visita guiada por el MIM",
+    "coverImg": "assets/articles/visita-mim/cover.jpg",
+    "source": "articles/visita-mim.md",
+    "gallery": [
+      "assets/articles/visita-mim/1.jpg",
+      "assets/articles/visita-mim/2.jpg"
+    ],
+    "publishDate": "08/01/2026"
+  },
+  {
     "title": "Hackeando la contaminación lumínica",
     "coverImg": "articles/contaminacion-luminica/cover.jpg",
     "source": "articles/contaminacion-luminica.md",
@@ -7,7 +17,7 @@
       "articles/contaminacion-luminica/1.jpg",
       "articles/contaminacion-luminica/2.jpg"
     ],
-    "publishDate": "25/01/2026"
+    "publishDate": "09/01/2026"
   },
   {
     "title": "Cómo imprimir tu telescopio en 3D",
@@ -17,7 +27,7 @@
       "articles/tutorial-3d/1.jpg",
       "articles/tutorial-3d/2.jpg"
     ],
-    "publishDate": "22/01/2026"
+    "publishDate": "10/01/2026"
   },
   {
     "title": "Nueva colaboración con ESO",
@@ -27,7 +37,7 @@
       "articles/colaboracion-eso/1.jpg",
       "articles/colaboracion-eso/2.jpg"
     ],
-    "publishDate": "20/01/2026"
+    "publishDate": "05/01/2026"
   },
   {
     "title": "Taller en Museo MIM",
@@ -37,7 +47,7 @@
       "articles/taller-mim/1.jpg",
       "articles/taller-mim/2.jpg"
     ],
-    "publishDate": "18/01/2026"
+    "publishDate": "06/01/2026"
   },
   {
     "title": "Lanzamiento de la versión Beta",
