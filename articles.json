@@ -10,6 +10,16 @@
     "publishDate": "08/01/2026"
   },
   {
+    "title": "Próximamente: Visita con prototipos al MIM",
+    "coverImg": "assets/articles/mim-event/cover.jpeg",
+    "source": "articles/presentacion-mim.md",
+    "gallery": [
+      "assets/articles/mim-event/cover.jpeg",
+      "assets/articles/mim-event/cover.jpeg"
+    ],
+    "publishDate": "19/03/2026"
+  },
+  {
     "title": "Desarrollo de prototipo físico",
     "coverImg": "assets/articles/prototipe-museum/PrototipeMuseumCover.jpg",
     "source": "articles/avance-prototipo-fisico-mim.md",
