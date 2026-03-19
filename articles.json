@@ -10,13 +10,13 @@
     "publishDate": "08/01/2026"
   },
   {
-    "title": "Lanzamiento de la versión Beta",
-    "coverImg": "articles/lanzamiento-beta/cover.jpg",
-    "source": "articles/lanzamiento-beta.md",
+    "title": "Desarrollo de prototipo físico",
+    "coverImg": "assets/articles/prototipe-museum/PrototipeMuseumCover.jpg",
+    "source": "articles/avance-prototipo-fisico-mim.md",
     "gallery": [
-      "articles/lanzamiento-beta/1.jpg",
-      "articles/lanzamiento-beta/2.jpg"
+      "assets/articles/prototipe-museum/PrototipeMuseum2.jpg",
+      "assets/articles/prototipe-museum/PrototipeMuseum3.jpg"
     ],
-    "publishDate": "15/01/2026"
+    "publishDate": "19/03/2026"
   }
 ]

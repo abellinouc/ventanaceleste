@@ -1,50 +1,45 @@
-# Del prototipo al aula: avances físicos de Ventana Celeste en el MIM
+# Del software al prototipo físico: el camino de Ventana Celeste para el MIM
 
-En **Ventana Celeste** seguimos avanzando con una meta clara: facilitar el acceso astronómico en contextos reales. Nuestro primer paso de validación fue en el **Museo Interactivo Mirador (MIM)** y, a mediano plazo, queremos llevar esta experiencia también a escuelas.
+En **Ventana Celeste** definimos una ruta clara para construir nuestro prototipo: comenzar por el sistema base en celular y, desde ahí, diseñar toda la parte física para que esa experiencia funcionara de forma estable en terreno.
 
-Durante las últimas semanas trabajamos en una versión funcional del sistema: una adaptación simple de Stellarium conectada desde celular e integrada a nuestro prototipo de telescopio. Este hito nos permitió pasar de pruebas internas a una demostración en terreno.
+Nuestro objetivo fue llevar al **Museo Interactivo Mirador (MIM)** una versión funcional que representara la interacción real de uso astronómico, cumpliendo los criterios solicitados para su exhibición.
 
-## ¿Qué progreso hemos logrado?
+## ¿Cómo fue nuestro proceso de desarrollo?
 
-En esta etapa dejamos atrás la idea inicial para concentrarnos en un prototipo usable, transportable y fácil de replicar. El avance más importante fue integrar tres componentes en un flujo continuo:
+Primero implementamos el sistema base de software en celular. Con esa base lista, ajustamos la aplicación para que funcionara directamente en el teléfono destinado a ir montado en el prototipo físico.
 
-* **App en celular:** Navegación astronómica asistida para ubicar objetos de observación.
-* **Montaje físico del telescopio:** Estructura estable para sostener óptica y soporte móvil.
-* **Conexión práctica entre ambos:** Alineación del celular con el eje del prototipo para guiar el apuntado.
+Después incorporamos una conexión con **Arduino** para controlar el zoom desde la estructura mecánica. Integramos un disco físico que, al girarlo, aplica niveles de zoom definidos por el sistema, logrando una experiencia de **zoom continuo** durante la observación.
 
-Con esto, ya no solo mostramos concepto: mostramos una experiencia de uso completa.
+## Integración software-hardware
 
-## Avances concretos en la parte física
+La conexión entre software y hardware fue uno de los avances más importantes de esta etapa. En términos prácticos, conseguimos:
 
-La parte mecánica fue el foco principal de esta fase. Estos son los progresos más relevantes:
+* Ejecutar el sistema astronómico directamente en el celular del prototipo.
+* Vincular Arduino con el control de zoom para convertir el giro físico en respuesta digital.
+* Mantener una interacción fluida entre manipulación manual y navegación astronómica en pantalla.
 
-1. **Estructura base más firme**
-Rediseñamos la base para reducir vibraciones y mejorar estabilidad durante la observación.
+Esto nos permitió pasar de una idea conceptual a un sistema interactivo completo.
 
-2. **Soporte de celular integrado al telescopio**
-Construimos una fijación más segura para el smartphone, evitando desplazamientos al manipular el equipo.
+## Decisiones clave del diseño físico
 
-3. **Mejor ergonomía de uso**
-Ajustamos altura, inclinación y puntos de agarre para que el montaje sea más cómodo para distintas edades.
+Para el desarrollo mecánico consideramos especialmente los pesos de los componentes montados (celular, soportes y estructura), porque ese balance determina la estabilidad del uso real.
 
-4. **Sistema de armado simplificado**
-Ordenamos piezas y uniones para que el prototipo pueda montarse con menos pasos y menor margen de error.
+En base a ello, diseñamos una resistencia al giro que ayudara a mantener el apuntado lo más estable posible durante la interacción. Así, el movimiento no queda ni demasiado suelto ni demasiado rígido, y el usuario puede controlar mejor la observación.
 
-5. **Portabilidad para actividades educativas**
-Priorizamos un diseño liviano y transportable, pensado para moverlo entre salas, patios o espacios del museo.
+Además, tomamos como referencia una **montura dobsoniana**, replicándola con materiales de bajo presupuesto. Esta elección nos permitió:
 
-## Validación en el MIM
+* Construir una estructura accesible y replicable.
+* Probar una interacción similar a la de un telescopio real.
+* Evaluar el comportamiento del prototipo en condiciones de demostración.
 
-La visita al MIM fue clave para observar el prototipo en un contexto de divulgación científica. Pudimos verificar:
+## Prototipo presentado para el MIM
 
-* Que el montaje físico soporta sesiones de demostración repetidas.
-* Que la integración celular-telescopio facilita la explicación astronómica a público general.
-* Que aún hay oportunidades de mejora en robustez y ajustes rápidos durante uso continuo.
+El resultado de esta fase es un prototipo pensado específicamente para su presentación en el MIM, considerando los criterios técnicos y de funcionamiento que nos indicaron para mostrarlo en su establecimiento.
 
-Esta retroalimentación nos entrega una hoja de ruta clara para la siguiente iteración.
+Más que una maqueta, es una plataforma de prueba que integra software móvil, control físico y estructura mecánica en un mismo flujo de uso.
 
-## Próximos pasos
+## Proyección educativa
 
-Nuestro siguiente objetivo es fortalecer la versión física para entornos educativos con alta rotación de usuarios, especialmente pensando en su futura implementación en escuelas. En paralelo, seguiremos refinando la experiencia digital para que el sistema completo sea más intuitivo y accesible.
+A futuro, buscamos desarrollar una versión de acceso más simple para colegios, con fines educativos en astronomía. La meta es conservar la experiencia de interacción del prototipo actual, pero adaptada a contextos escolares y a recursos más limitados.
 
-Seguimos construyendo una ventana al cielo que no dependa del presupuesto, sino de la curiosidad de cada estudiante.
+Seguimos trabajando para permitir la exploración del cielo de forma interactiva, accesible y educativa.
