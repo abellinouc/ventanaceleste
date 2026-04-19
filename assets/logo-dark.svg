@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 230 80"
+   version="1.1"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="vcRing"
+       x1="14.5"
+       y1="14.5"
+       x2="65.5"
+       y2="65.5"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#4FC3F7"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#0284C7"
+         id="stop2" />
+    </linearGradient>
+  </defs>
+  <!-- Icon (no background circle; transparent, for dark surfaces) -->
+  <!-- Wordmark (inverse for dark bg) -->
+  <g
+     id="g1"
+     transform="translate(0,-0.268122)">
+    <g
+       id="g3"
+       transform="matrix(1.0671787,0,0,1.0671787,-9.9624127,-2.419026)">
+      <ellipse
+         cx="40"
+         cy="40"
+         rx="32"
+         ry="10"
+         fill="none"
+         stroke="#4fc3f7"
+         stroke-width="1"
+         opacity="0.6"
+         transform="rotate(-25,40,40)"
+         id="ellipse2" />
+      <circle
+         cx="40"
+         cy="40"
+         r="24"
+         fill="none"
+         stroke="url(#vcRing)"
+         stroke-width="3"
+         id="circle2"
+         style="stroke:url(#vcRing)" />
+      <g
+         transform="translate(49.877961,34.610195)"
+         id="g2">
+        <path
+           d="M 0,-5 C 0.8,-1.5 1.5,-0.8 5,0 1.5,0.8 0.8,1.5 0,5 -0.8,1.5 -1.5,-0.8 -5,0 c 3.5,-0.8 4.2,-1.5 5,-5 z"
+           fill="#fff8e1"
+           id="path2" />
+      </g>
+      <path
+         d="M 23,37 A 24,24 0 0 1 34,26"
+         fill="none"
+         stroke="#ffffff"
+         stroke-width="0.8"
+         opacity="0.5"
+         stroke-linecap="round"
+         id="path3" />
+    </g>
+    <text
+       x="80.041962"
+       y="36.30645"
+       font-family="Inter, 'Helvetica Neue', Arial, sans-serif"
+       font-size="17.6484px"
+       font-weight="700"
+       fill="#ffffff"
+       letter-spacing="3"
+       id="text3"
+       style="fill:#fbfbfb;fill-opacity:1;stroke-width:1.07106">VENTANA</text>
+    <text
+       x="78.817551"
+       y="56.554749"
+       font-family="Inter, 'Helvetica Neue', Arial, sans-serif"
+       font-size="21.5112px"
+       font-weight="300"
+       font-style="italic"
+       fill="#4fc3f7"
+       letter-spacing="5"
+       id="text4"
+       style="stroke-width:1.19507">Celeste</text>
+  </g>
+</svg>
