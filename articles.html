@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noticias | Ventana Celeste</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- Marked.js per il parsing del Markdown -->
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Marked.js -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -19,38 +23,93 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        space: {
-                            900: '#050510',
-                            800: '#0f172a',
-                            700: '#1e293b',
-                        },
-                        neon: {
-                            cyan: '#22d3ee',
-                            purple: '#818cf8',
-                        }
+                        notte:     '#0F1B3D',
+                        cielo:     '#0284C7',
+                        digitale:  '#4FC3F7',
+                        stella:    '#FFD54F',
+                        neutro:    '#F5F5F7',
+                        profondo:  '#050817',
+                        crema:     '#FFF8E1',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #050510; color: white; }
-        
-        /* Stili personalizzati per il contenuto Markdown renderizzato */
+        body { background-color: #050817; color: white; overflow-x: hidden; }
+
+        .brand-bg {
+            background: radial-gradient(ellipse at 30% 20%, #1e3a8a 0%, #0f1b3d 55%, #050817 100%);
+        }
+
+        /* List view: blurred backdrop + full image on top */
+        .article-cover {
+            position: relative;
+            background-color: #0f1b3d;
+            isolation: isolate;
+            overflow: hidden;
+        }
+        .article-cover .cover-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(30px) saturate(1.2) brightness(0.95);
+            transform: scale(1.2);
+            z-index: 0;
+        }
+        .article-cover .cover-fg {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Detail view: fluid row of images, fixed height, natural width, wraps on overflow.
+           Breaks out to full viewport width so the row has room to breathe. */
+        .article-gallery-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            width: 100vw;
+            max-width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding-left: 1rem;
+            padding-right: 1rem;
+            box-sizing: border-box;
+        }
+        .article-gallery-row img {
+            height: 20rem;
+            width: auto;
+            max-width: 100%;
+            flex-shrink: 0;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            display: block;
+        }
+
+        /* Markdown content */
         .markdown-body h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; color: white; line-height: 1.1; }
-        .markdown-body h2 { font-size: 1.8rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #22d3ee; }
-        .markdown-body h3 { font-size: 1.4rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #818cf8; }
+        .markdown-body h2 { font-size: 1.8rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #4FC3F7; }
+        .markdown-body h3 { font-size: 1.4rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #FFD54F; }
         .markdown-body p { margin-bottom: 1.25rem; line-height: 1.8; color: #cbd5e1; font-size: 1.1rem; }
         .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
         .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
         .markdown-body strong { color: white; font-weight: 700; }
-        .markdown-body a { color: #22d3ee; text-decoration: underline; text-underline-offset: 4px; }
-        .markdown-body blockquote { border-left: 4px solid #818cf8; padding-left: 1rem; font-style: italic; color: #94a3b8; margin: 1.5rem 0; }
-        
+        .markdown-body a { color: #4FC3F7; text-decoration: underline; text-underline-offset: 4px; }
+        .markdown-body a:hover { color: #FFD54F; }
+        .markdown-body blockquote { border-left: 4px solid #FFD54F; padding-left: 1rem; font-style: italic; color: #94a3b8; margin: 1.5rem 0; }
+
         /* Loader */
         .loader {
             border: 4px solid rgba(255,255,255,0.1);
-            border-left-color: #22d3ee;
+            border-left-color: #4FC3F7;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -58,19 +117,32 @@
             margin: 0 auto;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .stars::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8), transparent 50%),
+                radial-gradient(1px 1px at 75% 15%, rgba(255,213,79,0.9), transparent 50%),
+                radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.7), transparent 50%),
+                radial-gradient(1.2px 1.2px at 10% 80%, rgba(79,195,247,0.9), transparent 50%),
+                radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6), transparent 50%);
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="bg-space-900 text-white font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-profondo text-white font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- NAVIGATION (Simplificada) -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-space-900/70 border-b border-white/10">
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-profondo/70 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex-shrink-0 cursor-pointer group">
-                    <span class="text-2xl font-bold tracking-tighter text-white group-hover:text-neon-cyan transition">Ventana<span class="text-neon-cyan group-hover:text-white transition">Celeste</span></span>
+                <a href="index.html" class="flex-shrink-0 cursor-pointer group block">
+                    <img src="assets/logo-dark.svg" alt="Ventana Celeste" class="h-16 md:h-20 w-auto">
                 </a>
                 <div>
-                    <a href="index.html" class="text-gray-300 hover:text-white transition font-medium flex items-center gap-2">
+                    <a href="index.html" class="text-slate-300 hover:text-digitale transition font-medium flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Volver al Inicio
                     </a>
@@ -80,24 +152,26 @@
     </nav>
 
     <!-- HEADER BACKGROUND -->
-    <div class="relative pt-32 pb-12 bg-space-900 overflow-hidden">
+    <div class="relative pt-32 pb-12 brand-bg overflow-hidden">
         <div class="absolute inset-0 z-0 opacity-30">
             <img src="assets/space-background.webp" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-space-900 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-profondo to-transparent"></div>
         </div>
+        <div class="absolute inset-0 stars"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 text-center">
-            <h1 id="page-title" class="text-4xl md:text-5xl font-extrabold text-white mb-4">Noticias</h1>
-            <p id="page-subtitle" class="text-xl text-gray-400">Explora el universo de actualizaciones del proyecto.</p>
+            <span class="text-digitale font-bold uppercase tracking-[0.25em] text-xs">★ Bitácora</span>
+            <h1 id="page-title" class="text-4xl md:text-5xl font-extrabold text-white mb-4 mt-2">Noticias</h1>
+            <p id="page-subtitle" class="text-xl text-slate-400">Explora el universo de actualizaciones del proyecto.</p>
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full z-10 relative">
-        
+
         <!-- LOADER -->
         <div id="loader" class="text-center py-20">
             <div class="loader"></div>
-            <p class="mt-4 text-gray-400 animate-pulse">Cargando contenido...</p>
+            <p class="mt-4 text-slate-400 animate-pulse">Cargando contenido...</p>
         </div>
 
         <!-- ERROR MESSAGE -->
@@ -109,34 +183,34 @@
         <!-- VISTA: LISTA DE ARTÍCULOS -->
         <div id="articles-list" class="hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="grid-container">
-                <!-- Javascript will populate this -->
+                <!-- populated by JS -->
             </div>
         </div>
 
         <!-- VISTA: ARTÍCULO INDIVIDUAL -->
-        <div id="article-detail" class="hidden max-w-4xl mx-auto">
-            
-            <!-- Breadcrumb -->
-            <div class="mb-8">
-                <a href="articles.html" class="text-neon-cyan hover:text-white transition text-sm font-bold uppercase tracking-wider flex items-center gap-1">
-                    &larr; Ver todas las noticias
-                </a>
+        <div id="article-detail" class="hidden">
+
+            <div class="max-w-4xl mx-auto">
+                <!-- Breadcrumb -->
+                <div class="mb-8">
+                    <a href="articles.html" class="text-digitale hover:text-stella transition text-sm font-bold uppercase tracking-wider flex items-center gap-1">
+                        &larr; Ver todas las noticias
+                    </a>
+                </div>
+
+                <div id="detail-date" class="text-digitale/80 font-medium tracking-widest text-sm mb-2 uppercase"></div>
+
+                <h1 id="detail-title" class="text-4xl md:text-5xl font-extrabold text-white mb-10 leading-tight"></h1>
             </div>
 
-            <!-- Fecha de publicación del artículo -->
-            <div id="detail-date" class="text-neon-cyan/80 font-medium tracking-widest text-sm mb-2 uppercase"></div>
+            <!-- Gallery (full width, wraps fluidly, fixed height / natural widths) -->
+            <div id="detail-gallery" class="article-gallery-row mb-12"></div>
 
-            <!-- Título del Artículo -->
-            <h1 id="detail-title" class="text-4xl md:text-5xl font-extrabold text-white mb-10 leading-tight"></h1>
-
-            <!-- Gallery Section -->
-            <div id="detail-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-                <!-- Javascript will populate images here -->
-            </div>
-
-            <!-- Markdown Content -->
-            <div id="detail-content" class="markdown-body bg-space-800/50 p-8 md:p-12 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-sm">
-                <!-- Content parsed from MD -->
+            <div class="max-w-4xl mx-auto">
+                <!-- Markdown Content -->
+                <div id="detail-content" class="markdown-body bg-notte/70 p-8 md:p-12 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-sm">
+                    <!-- parsed from MD -->
+                </div>
             </div>
 
         </div>
@@ -144,10 +218,9 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-space-900 border-t border-white/10 pt-10 pb-8 mt-auto">
+    <footer class="bg-notte border-t border-white/10 pt-10 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <span class="text-xl font-bold text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
-            <p class="text-gray-500 text-sm mt-2">Open Source Project 2026</p>
+            <img src="assets/logo.svg" alt="Ventana Celeste" class="h-12 w-auto mx-auto">
         </div>
     </footer>
 
@@ -155,19 +228,17 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const articleSlug = urlParams.get('article'); // Recupera ?article=xyz
+            const articleSlug = urlParams.get('article');
 
             const loader = document.getElementById('loader');
             const errorMsg = document.getElementById('error-msg');
             const listContainer = document.getElementById('articles-list');
             const gridContainer = document.getElementById('grid-container');
             const detailContainer = document.getElementById('article-detail');
-            
-            // Text Elements for Header
+
             const pageTitle = document.getElementById('page-title');
             const pageSubtitle = document.getElementById('page-subtitle');
 
-            // Cargar JSON principal
             fetch('articles.json')
                 .then(response => {
                     if (!response.ok) throw new Error("No se pudo cargar articles.json");
@@ -177,10 +248,8 @@
                     loader.classList.add('hidden');
 
                     if (articleSlug) {
-                        // --- MODO ARTÍCULO ÚNICO ---
                         loadSingleArticle(articleSlug, articles);
                     } else {
-                        // --- MODO LISTA COMPLETA ---
                         loadArticlesList(articles);
                     }
                 })
@@ -191,46 +260,39 @@
                     console.error(err);
                 });
 
-            // --- FUNCIÓN: CARGAR LISTA ---
             function loadArticlesList(articles) {
                 listContainer.classList.remove('hidden');
-                
-                /* ORDENADO SEGÚN JSON */
-                // // Invertir orden (más nuevo primero)
-                // const reversed = articles.reverse();
 
-                /* ORDENADO SEGÚN FECHA */
                 const reversed = articles.sort((a, b) => {
-                        const dateA = new Date(a.publishDate.split('/').reverse().join('-'));
-                        const dateB = new Date(b.publishDate.split('/').reverse().join('-'));
-                        return dateB - dateA; // Descendente
-                    });
+                    const dateA = new Date(a.publishDate.split('/').reverse().join('-'));
+                    const dateB = new Date(b.publishDate.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                });
 
                 if (reversed.length === 0) {
-                    gridContainer.innerHTML = '<p class="text-gray-400 col-span-full text-center">No hay artículos disponibles.</p>';
+                    gridContainer.innerHTML = '<p class="text-slate-400 col-span-full text-center">No hay artículos disponibles.</p>';
                     return;
                 }
 
                 reversed.forEach(article => {
-                    // Slug simple removiendo .md
                     const slug = article.source.split('/').pop().replace('.md', '');
-                    
+
                     const card = document.createElement('div');
-                    card.className = "group flex flex-col bg-space-800 rounded-xl overflow-hidden border border-white/10 hover:border-neon-cyan hover:shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all duration-300 hover:-translate-y-2 h-full";
-                    
+                    card.className = "group flex flex-col bg-notte rounded-xl overflow-hidden border border-white/10 hover:border-digitale hover:shadow-[0_0_20px_rgba(79,195,247,0.25)] transition-all duration-300 hover:-translate-y-2 h-full";
+
                     card.innerHTML = `
                         <a href="articles.html?article=${slug}" class="flex flex-col h-full">
-                            <div class="h-56 overflow-hidden relative">
-                                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10"></div>
-                                <img src="${article.coverImg}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="article-cover h-56">
+                                <img src="${article.coverImg}" alt="" aria-hidden="true" class="cover-bg">
+                                <img src="${article.coverImg}" alt="${article.title}" class="cover-fg group-hover:scale-105 transition duration-700">
                             </div>
                             <div class="p-6 flex-grow flex flex-col justify-between">
                                 <div>
-                                    <span class="text-xs text-neon-cyan/60 font-bold uppercase tracking-tighter mb-2 block">${article.publishDate || ''}</span>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-cyan transition">${article.title}</h3>
-                                    <p class="text-gray-400 text-sm line-clamp-3 mb-4">Haz clic para leer la historia completa y ver la galería de imágenes.</p>
+                                    <span class="text-xs text-digitale/70 font-bold uppercase tracking-[0.2em] mb-2 block">${article.publishDate || ''}</span>
+                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-digitale transition">${article.title}</h3>
+                                    <p class="text-slate-400 text-sm line-clamp-3 mb-4">Haz clic para leer la historia completa y ver la galería de imágenes.</p>
                                 </div>
-                                <span class="text-neon-cyan text-sm font-bold uppercase tracking-wider flex items-center gap-1">
+                                <span class="text-stella text-sm font-bold uppercase tracking-wider flex items-center gap-1">
                                     Leer Artículo <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </span>
                             </div>
@@ -240,45 +302,43 @@
                 });
             }
 
-            // --- FUNCIÓN: CARGAR ARTÍCULO ÚNICO ---
             function loadSingleArticle(slug, articles) {
-                // Buscar el artículo que corresponda al slug (source file)
                 const article = articles.find(a => {
-					// Limpiamos la fuente del JSON: "articles/archivo.md" -> "archivo"
-					const jsonSlug = a.source.split('/').pop().replace('.md', '');
-					return jsonSlug === slug;
-				});
+                    const jsonSlug = a.source.split('/').pop().replace('.md', '');
+                    return jsonSlug === slug;
+                });
 
                 if (!article) {
                     throw new Error("Artículo no encontrado.");
                 }
 
-                // Ocultar Header Global y mostrar UI de detalle
                 pageTitle.style.display = 'none';
                 pageSubtitle.style.display = 'none';
                 detailContainer.classList.remove('hidden');
 
-                // 1. Set Title
                 document.getElementById('detail-title').innerText = article.title;
                 document.getElementById('detail-date').innerText = article.publishDate || '';
                 document.title = article.title + " | Ventana Celeste";
 
-                // 2. Set Gallery (Si existe en el JSON)
                 const galleryContainer = document.getElementById('detail-gallery');
-                if (article.gallery && Array.isArray(article.gallery) && article.gallery.length > 0) {
-                    article.gallery.forEach(imgSrc => {
-                        const imgDiv = document.createElement('div');
-                        imgDiv.className = "rounded-xl overflow-hidden border border-white/10 h-64 shadow-lg";
-                        imgDiv.innerHTML = `<img src="${imgSrc}" class="w-full h-full object-cover">`;
-                        galleryContainer.appendChild(imgDiv);
+                const images = [];
+                if (article.coverImg) images.push(article.coverImg);
+                if (article.gallery && Array.isArray(article.gallery)) {
+                    article.gallery.forEach(src => { if (src !== article.coverImg) images.push(src); });
+                }
+                if (images.length > 0) {
+                    images.forEach(imgSrc => {
+                        const img = document.createElement('img');
+                        img.src = imgSrc;
+                        img.alt = "Imagen del artículo";
+                        galleryContainer.appendChild(img);
                     });
                 } else {
                     galleryContainer.style.display = 'none';
                 }
 
-                // 3. Fetch y Parse Markdown
                 const contentDiv = document.getElementById('detail-content');
-                contentDiv.innerHTML = '<div class="loader"></div>'; // Loading interno
+                contentDiv.innerHTML = '<div class="loader"></div>';
 
                 fetch(article.source)
                     .then(res => {
@@ -286,7 +346,6 @@
                         return res.text();
                     })
                     .then(markdown => {
-                        // Usar Marked.js para convertir MD a HTML
                         contentDiv.innerHTML = marked.parse(markdown);
                     })
                     .catch(err => {

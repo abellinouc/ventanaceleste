@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventana Celeste | El Universo en tus manos</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- Marked.js per il futuro parsing del Markdown (necessario per articles.html, utile averlo in cache) -->
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Marked.js (cache) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -19,58 +23,102 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        space: {
-                            900: '#050510', // Fondo molto scuro
-                            800: '#0f172a',
-                            700: '#1e293b',
-                        },
-                        neon: {
-                            cyan: '#22d3ee', // Cyan-400
-                            purple: '#818cf8', // Indigo-400
-                        }
+                        // Brand identity palette
+                        notte:     '#0F1B3D', // Night - dark navy (primary)
+                        cielo:     '#0284C7', // Sky blue
+                        digitale:  '#4FC3F7', // Digital light cyan
+                        stella:    '#FFD54F', // Star yellow
+                        neutro:    '#F5F5F7', // Neutral light
+                        profondo:  '#050817', // Deep space
+                        crema:     '#FFF8E1', // Warm star glow
                     }
                 }
             }
         }
     </script>
     <style>
+        body { background-color: #050817; }
+
+        /* Brand gradient background (from identity SVG) */
+        .brand-bg {
+            background: radial-gradient(ellipse at 30% 20%, #1e3a8a 0%, #0f1b3d 55%, #050817 100%);
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hero-overlay { background: radial-gradient(circle at center, transparent 0%, #050510 90%); }
-        
-        /* Loader per il form */
+
+        /* Article covers: blurred backdrop fills the card, main image stays fully visible */
+        .article-cover {
+            position: relative;
+            background-color: #0f1b3d;
+            isolation: isolate;
+        }
+        .article-cover .cover-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(30px) saturate(1.2) brightness(0.95);
+            transform: scale(1.2);
+            z-index: 0;
+        }
+        .article-cover .cover-fg {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Loader */
         .loader {
-            border: 3px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
             border-radius: 50%;
-            border-top: 3px solid #22d3ee;
+            border-top: 3px solid #4FC3F7;
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Subtle starfield on hero */
+        .stars::before, .stars::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8), transparent 50%),
+                radial-gradient(1px 1px at 75% 15%, rgba(255,213,79,0.9), transparent 50%),
+                radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.7), transparent 50%),
+                radial-gradient(1.2px 1.2px at 10% 80%, rgba(79,195,247,0.9), transparent 50%),
+                radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6), transparent 50%),
+                radial-gradient(1px 1px at 40% 10%, rgba(255,213,79,0.8), transparent 50%);
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="bg-space-900 text-white font-sans antialiased selection:bg-neon-cyan selection:text-black">
+<body class="bg-profondo text-white font-sans antialiased selection:bg-digitale selection:text-notte">
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-space-900/70 border-b border-white/10">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-profondo/70 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 cursor-pointer">
-                    <a href="#inicio"><span class="text-2xl font-bold tracking-tighter text-white">Ventana<span class="text-neon-cyan">Celeste</span></span></a>
+                    <a href="#inicio" class="block">
+                        <img src="assets/logo-dark.svg" alt="Ventana Celeste" class="h-16 md:h-20 w-auto">
+                    </a>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#inicio" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
-                        <a href="#noticias" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Noticias</a>
-                        <a href="#modelos" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Modelos</a>
-                        <a href="#team" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Team</a>
-						<a href="#contacto" class="hover:text-neon-cyan transition px-3 py-2 rounded-md text-sm font-medium">Contacto</a>
-                        
-					</div>
+                        <a href="#inicio" class="hover:text-digitale transition px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                        <a href="#noticias" class="hover:text-digitale transition px-3 py-2 rounded-md text-sm font-medium">Noticias</a>
+                        <a href="#team" class="hover:text-digitale transition px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                        <a href="#contacto" class="hover:text-digitale transition px-3 py-2 rounded-md text-sm font-medium">Contacto</a>
+                    </div>
                 </div>
                 <div>
-                    <button onclick="openAppModal()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg shadow-cyan-500/30 transition transform hover:scale-105">
+                    <button onclick="openAppModal()" class="bg-gradient-to-r from-digitale to-cielo hover:from-cielo hover:to-digitale text-notte font-bold py-2 px-6 rounded-full shadow-lg shadow-cielo/30 transition transform hover:scale-105">
                         ¡EMPIEZA!
                     </button>
                 </div>
@@ -79,37 +127,38 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-20 bg-space-900">
+    <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden pt-20 brand-bg">
         <div class="absolute inset-0 z-0">
-            <!-- Placeholder image se l'asset non esiste -->
-            <img src="assets/space-background.webp" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'" alt="Space Background" 
-                 class="w-full h-full object-cover brightness-50">
-            <div class="absolute inset-0 bg-gradient-to-r from-space-900 via-transparent to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-transparent to-transparent"></div>
+            <img src="assets/space-background.webp" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'" alt="Space Background"
+                 class="w-full h-full object-cover brightness-[0.35] opacity-70">
+            <div class="absolute inset-0 bg-gradient-to-r from-profondo via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-profondo via-transparent to-transparent"></div>
+            <div class="absolute inset-0 stars"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="flex flex-col md:flex-row items-stretch justify-between gap-8 md:gap-16">
                 <div class="w-full md:w-2/3 py-10">
+                    <div class="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full border border-digitale/40 bg-notte/40 backdrop-blur-sm">
+                        <span class="text-stella">★</span>
+                        <span class="text-xs tracking-[0.25em] uppercase text-digitale font-semibold">Astronomía para todos</span>
+                    </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
                         El Universo <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">en tus manos.</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-digitale via-cielo to-stella">en tus manos.</span>
                     </h1>
-                    <p class="text-xl text-gray-300 mb-8 font-light leading-relaxed max-w-xl">
+                    <p class="text-xl text-slate-300 mb-8 font-light leading-relaxed max-w-xl">
                         Transforma tu smartphone en un telescopio real. Combate la contaminación lumínica y redescubre el cielo.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button onclick="openAppModal()" class="bg-white text-space-900 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-xl transition flex items-center justify-center gap-2">
+                        <a href="https://app.ventanaceleste.com" target="_blank" rel="noopener" class="bg-stella text-notte hover:bg-crema font-bold py-4 px-8 rounded-lg shadow-xl shadow-stella/20 transition flex items-center justify-center gap-2">
                             LANZAR APP WEB
-                        </button>
-                        <a href="#modelos" class="border border-white/30 hover:border-white hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg transition text-center backdrop-blur-sm">
-                            Construye tu Telescopio
                         </a>
                     </div>
                 </div>
                 <div class="hidden md:flex md:w-1/3 self-stretch py-10">
                     <div class="relative w-full h-full min-h-[400px] overflow-hidden rounded-2xl">
-                        <img src="assets/person-telescope.webp" onerror="this.src='https://images.unsplash.com/photo-1533206260133-f542289eb9cc?q=80&w=1740&auto=format&fit=crop'" alt="Person Telescope" 
+                        <img src="assets/person-telescope.webp" onerror="this.src='https://images.unsplash.com/photo-1533206260133-f542289eb9cc?q=80&w=1740&auto=format&fit=crop'" alt="Person Telescope"
                              class="absolute inset-0 w-full h-full object-cover object-center">
                     </div>
                 </div>
@@ -117,23 +166,22 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: NOTICIAS / ARTICLES -->
-    <section id="noticias" class="py-16 bg-space-800 border-t border-white/5">
+    <!-- NOTICIAS -->
+    <section id="noticias" class="py-20 bg-notte border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-10">
                 <div>
-                    <h2 class="text-3xl font-bold text-white">Últimas Noticias</h2>
-                    <p class="text-gray-400 mt-2">Actualizaciones del proyecto y descubrimientos.</p>
+                    <span class="text-digitale font-bold uppercase tracking-[0.25em] text-xs">★ Bitácora</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Últimas Noticias</h2>
+                    <p class="text-slate-400 mt-2">Actualizaciones del proyecto y descubrimientos.</p>
                 </div>
-                <a href="articles.html" id="view-all-btn" class="hidden text-neon-cyan hover:text-white transition text-sm font-bold uppercase tracking-wider">
+                <a href="articles.html" id="view-all-btn" class="hidden text-digitale hover:text-stella transition text-sm font-bold uppercase tracking-wider">
                     Ver todas &rarr;
                 </a>
             </div>
 
-            <!-- Container for dynamic articles -->
             <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Loader placeholder -->
-                <div class="col-span-full text-center py-10 text-gray-500">
+                <div class="col-span-full text-center py-10 text-slate-500">
                     Cargando artículos...
                 </div>
             </div>
@@ -141,56 +189,23 @@
     </section>
 
 
-    <!-- MODELOS (DIY & MUSEO) -->
-    <section id="modelos" class="py-24 bg-black">
+    <!-- MUSEO -->
+    <section class="py-24 bg-profondo">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between mb-12">
-                <div>
-                    <span class="text-neon-cyan font-bold uppercase tracking-wider text-sm">DIY & Educación</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Crea tu Ventana Celeste</h2>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 mb-24">
-                <!-- Home Version -->
-                <div class="group relative bg-space-800 rounded-2xl overflow-hidden border border-white/10 hover:border-neon-cyan transition-all">
-                    <div class="h-64 overflow-hidden">
-                         <img src="assets/in-progress.jpg" alt="Home Version" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold mb-2">Home Edition</h3>
-                        <p class="text-gray-400 mb-6">Usa tu smartphone y materiales accesibles. Perfecto para familias y hobbistas.</p>
-                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-neon-cyan pb-1 hover:text-neon-cyan transition">Ver Instrucciones &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- School Version -->
-                <div class="group relative bg-space-800 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500 transition-all">
-                    <div class="h-64 overflow-hidden">
-                        <img src="assets/in-progress.jpg" alt="School Version" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold mb-2">School Edition</h3>
-                        <p class="text-gray-400 mb-6">Kit robusto diseñado para el aula. Fomenta el aprendizaje colaborativo.</p>
-                        <a href="#" class="inline-block text-white font-semibold border-b-2 border-purple-500 pb-1 hover:text-purple-400 transition">Descargar Planos &rarr;</a>
-                    </div>
-                </div>
-            </div>
 
             <!-- SECCION MUSEO -->
-            <div class="relative rounded-3xl overflow-hidden border border-white/10 min-h-[350px] md:min-h-[350px]">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10 min-h-[350px] md:min-h-[350px] bg-notte">
                 <div class="absolute inset-y-0 right-0 w-full md:w-1/2 lg:w-2/5">
                     <img src="assets/articles/PrototipeMuseum2.jpg" class="w-full h-full object-cover object-right opacity-50">
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/40"></div>
-                <div class="absolute inset-y-0 right-0 w-full md:w-1/2 lg:w-2/5 bg-gradient-to-l from-transparent to-black/20"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-notte via-notte/90 to-notte/40"></div>
                 <div class="relative h-full p-12 md:p-16 md:w-2/3 flex flex-col justify-center">
-                    <span class="text-purple-400 font-bold uppercase tracking-wider text-sm">Institucional</span>
+                    <span class="text-stella font-bold uppercase tracking-[0.25em] text-xs">★ Institucional</span>
                     <h2 class="text-3xl md:text-5xl font-bold text-white mt-2 mb-6">Instalaciones Inmersivas</h2>
-                    <p class="text-gray-300 text-lg mb-8">
+                    <p class="text-slate-300 text-lg mb-8">
                         Soluciones de alto impacto para museos, planetarios y centros culturales.
                     </p>
-                    <button onclick="openMuseumModal()" class="bg-white text-black font-bold py-3 px-8 rounded-lg hover:bg-gray-200 transition">
+                    <button onclick="openMuseumModal()" class="bg-stella text-notte font-bold py-3 px-8 rounded-lg hover:bg-crema transition self-start">
                         CONTÁCTANOS
                     </button>
                 </div>
@@ -199,99 +214,93 @@
     </section>
 
     <!-- TEAM -->
-    <section id="team" class="py-24 bg-space-900 border-t border-white/5">
+    <section id="team" class="py-24 bg-notte border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-white mb-12">Nuestro Equipo</h2>
+            <span class="text-digitale font-bold uppercase tracking-[0.25em] text-xs">✦ Equipo</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-12">Nuestro Equipo</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                 <!-- Member 1 -->
                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-digitale transition">
                         <img src="assets/miembros/Allessio.jpg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Alessio Bellino</h4>
-                    <p class="text-xs text-neon-cyan uppercase mt-1">Founder & Vision</p>
+                    <p class="text-xs text-digitale uppercase mt-1 tracking-wider">Founder & Vision</p>
                 </div>
-                 <!-- Member 2 -->
-                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-digitale transition">
                         <img src="assets/miembros/Francisco.jpeg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Francisco Maureira</h4>
-                    <p class="text-xs text-neon-cyan uppercase mt-1">Head of Phygital</p>
+                    <p class="text-xs text-digitale uppercase mt-1 tracking-wider">Head of Phygital</p>
                 </div>
-                 <!-- Member 3 -->
-                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-digitale transition">
                         <img src="assets/miembros/Gonzalo.jpg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Gonzalo Barrueto</h4>
-                    <p class="text-xs text-neon-cyan uppercase mt-1">Simulation Eng.</p>
+                    <p class="text-xs text-digitale uppercase mt-1 tracking-wider">Simulation Eng.</p>
                 </div>
-                 <!-- Member 4 -->
-                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-neon-cyan transition">
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-digitale transition">
                         <img src="assets/miembros/Eduardo.jpg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Eduardo Sepulveda</h4>
-                    <p class="text-xs text-neon-cyan uppercase mt-1">Lead Developer</p>
+                    <p class="text-xs text-digitale uppercase mt-1 tracking-wider">Lead Developer</p>
                 </div>
-                 <!-- Member 5 -->
-                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-purple-500 transition">
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-stella transition">
                         <img src="assets/miembros/Sergio.jpg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Sergio Vásquez</h4>
-                    <p class="text-xs text-purple-400 uppercase mt-1">Scientific Advisor</p>
+                    <p class="text-xs text-stella uppercase mt-1 tracking-wider">Scientific Advisor</p>
                 </div>
-                 <!-- Member 6 -->
-                 <div class="group">
-                    <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-purple-500 transition">
+                <div class="group">
+                    <div class="w-24 h-24 mx-auto bg-profondo rounded-full mb-4 overflow-hidden ring-2 ring-transparent group-hover:ring-stella transition">
                         <img src="assets/miembros/Leonardo.jpg" class="w-full h-full object-cover">
                     </div>
                     <h4 class="font-bold text-white">Leonardo Vanzi</h4>
-                    <p class="text-xs text-purple-400 uppercase mt-1">Scientific Sup.</p>
+                    <p class="text-xs text-stella uppercase mt-1 tracking-wider">Scientific Sup.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: CONTACTO FORM -->
-    <section id="contacto" class="py-24 bg-space-800 relative">
+    <!-- CONTACTO FORM -->
+    <section id="contacto" class="py-24 bg-profondo relative">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-white">Contáctanos</h2>
-                <p class="text-gray-400 mt-2">¿Tienes dudas o quieres colaborar? Escríbenos.</p>
+                <span class="text-digitale font-bold uppercase tracking-[0.25em] text-xs">✉ Contáctanos</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Hablemos</h2>
+                <p class="text-slate-400 mt-2">¿Tienes dudas o quieres colaborar? Escríbenos.</p>
             </div>
 
-            <div class="bg-space-900 border border-white/10 rounded-2xl p-8 shadow-xl">
-                
-                <!-- Feedback di successo -->
+            <div class="bg-notte border border-white/10 rounded-2xl p-8 shadow-xl">
+
                 <div id="main-form-confirmation" class="hidden text-center py-10">
-                    <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-16 h-16 bg-stella/20 text-stella rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white">¡Mensaje Enviado!</h3>
-                    <p class="text-gray-400">Gracias por escribirnos. Te responderemos pronto.</p>
+                    <p class="text-slate-400">Gracias por escribirnos. Te responderemos pronto.</p>
                 </div>
 
-                <!-- Modulo Principale -->
                 <form id="main-contact-form" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Nombre</label>
-                            <input type="text" name="entry.952217186" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="Tu nombre">
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Nombre</label>
+                            <input type="text" name="entry.952217186" required class="w-full bg-profondo border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-digitale transition" placeholder="Tu nombre">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Correo Electrónico</label>
-                            <input type="email" name="entry.1988284086" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="correo@ejemplo.com">
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Correo Electrónico</label>
+                            <input type="email" name="entry.1988284086" required class="w-full bg-profondo border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-digitale transition" placeholder="correo@ejemplo.com">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje</label>
-                        <textarea name="entry.1929946945" rows="4" required class="w-full bg-space-800 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition" placeholder="¿En qué podemos ayudarte?"></textarea>
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Mensaje</label>
+                        <textarea name="entry.1929946945" rows="4" required class="w-full bg-profondo border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-digitale transition" placeholder="¿En qué podemos ayudarte?"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-gradient-to-r from-neon-cyan to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-bold py-4 rounded-lg transition transform hover:scale-[1.01] flex items-center justify-center">
+                    <button type="submit" class="w-full bg-gradient-to-r from-digitale to-cielo hover:from-cielo hover:to-digitale text-notte font-bold py-4 rounded-lg transition transform hover:scale-[1.01] flex items-center justify-center">
                         <span id="main-btn-text">ENVIAR MENSAJE</span>
                         <div id="main-btn-loader" class="loader hidden ml-2"></div>
                     </button>
@@ -301,48 +310,44 @@
     </section>
 
     <!-- PARTNERS -->
-    <section class="py-12 bg-black border-t border-white/5">
+    <section class="py-12 bg-notte border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-500 text-sm uppercase tracking-widest mb-8">Respaldado por</p>
-            
+            <p class="text-slate-500 text-sm uppercase tracking-widest mb-8">Respaldado por</p>
+
             <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500">
-                
                 <div class="w-32 h-16 flex items-center justify-center">
                     <img src="assets/logos/logo-MIM.webp" class="max-h-10 w-auto object-contain" alt="Logo MIM">
                 </div>
-                
                 <div class="w-32 h-16 flex items-center justify-center">
                     <img src="assets/logos/logo-ESO.webp" class="max-h-10 w-auto object-contain" alt="Logo ESO">
                 </div>
-                
                 <div class="w-32 h-16 flex items-center justify-center">
                     <img src="assets/logos/logo-UC.webp" class="max-h-10 w-auto object-contain" alt="Logo UC">
                 </div>
-                
                 <div class="w-32 h-16 flex items-center justify-center">
                     <img src="assets/logos/logo-DCC.webp" class="w-24 h-auto object-contain" alt="Logo DCC">
                 </div>
-                
                 <div class="w-32 h-16 flex items-center justify-center">
                     <img src="assets/logos/logo-Dilab.webp" class="w-24 h-auto object-contain" alt="Logo Dilab">
                 </div>
-    
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-space-900 border-t border-white/10 pt-16 pb-8">
+    <footer class="bg-profondo border-t border-white/10 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <span class="text-xl font-bold text-white">Ventana<span class="text-neon-cyan">Celeste</span></span>
-                    <p class="text-gray-500 text-sm mt-2">El Universo en tus manos.</p>
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <img src="assets/logo.svg" alt="Ventana Celeste" class="h-12 w-auto mx-auto md:mx-0">
+                    <p class="text-slate-500 text-sm mt-2">El Universo en tus manos.</p>
                 </div>
-                <div class="flex space-x-6">
-                    <!-- AÑADIR CUANDO TENGAMOS INSTAGRAM -->
-                    <!-- <a href="#" class="text-gray-400 hover:text-white">Instagram</a> -->
-                    <a href="#contacto" class="text-gray-400 hover:text-white">Contacto</a>
+                <div class="flex items-center space-x-6">
+                    <a href="https://instagram.com/ventana.celeste" target="_blank" rel="noopener" aria-label="Instagram @ventana.celeste" class="text-slate-400 hover:text-digitale transition inline-flex">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.334 3.608 1.308.974.975 1.246 2.242 1.308 3.608.058 1.265.069 1.645.069 4.849s-.011 3.584-.069 4.849c-.062 1.366-.334 2.633-1.308 3.608-.975.974-2.242 1.246-3.608 1.308-1.265.058-1.645.07-4.849.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.975-1.246-2.242-1.308-3.608C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.849c.062-1.366.334-2.633 1.308-3.608.975-.974 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.838c-3.148 0-3.52.012-4.764.069-1.02.047-1.573.216-1.94.36-.488.19-.836.417-1.202.783-.366.366-.593.714-.783 1.201-.144.368-.313.922-.36 1.941-.057 1.244-.069 1.617-.069 4.764s.012 3.52.069 4.764c.047 1.02.216 1.573.36 1.94.19.488.417.836.783 1.202.366.366.714.593 1.201.783.368.144.922.313 1.941.36 1.244.057 1.617.069 4.764.069s3.52-.012 4.764-.069c1.02-.047 1.573-.216 1.94-.36.488-.19.836-.417 1.202-.783.366-.366.593-.714.783-1.201.144-.368.313-.922.36-1.941.057-1.244.069-1.617.069-4.764s-.012-3.52-.069-4.764c-.047-1.02-.216-1.573-.36-1.94a3.23 3.23 0 0 0-.783-1.202 3.23 3.23 0 0 0-1.201-.783c-.368-.144-.922-.313-1.941-.36-1.244-.057-1.617-.069-4.764-.069zm0 3.139a5.86 5.86 0 1 1 0 11.72 5.86 5.86 0 0 1 0-11.72zm0 9.665a3.805 3.805 0 1 0 0-7.61 3.805 3.805 0 0 0 0 7.61zm7.455-9.877a1.37 1.37 0 1 1-2.74 0 1.37 1.37 0 0 1 2.74 0z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -352,85 +357,84 @@
 
     <!-- APP LAUNCH MODAL -->
     <div id="appModal" class="fixed inset-0 z-[60] hidden">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeAppModal()"></div>
+        <div class="absolute inset-0 bg-profondo/90 backdrop-blur-sm" onclick="closeAppModal()"></div>
         <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
-            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-2xl w-full p-8 shadow-2xl">
+            <div class="bg-notte border border-white/10 rounded-2xl max-w-2xl w-full p-8 shadow-2xl">
                 <div class="text-center mb-8">
-                    <h3 class="text-3xl font-bold text-white mb-2">Selecciona tu Telescopio</h3>
-                    <p class="text-gray-400">Elige tu versión para conectar.</p>
+                    <span class="text-digitale font-bold uppercase tracking-[0.25em] text-xs">✦ App</span>
+                    <h3 class="text-3xl font-bold text-white mt-2 mb-2">Selecciona tu Telescopio</h3>
+                    <p class="text-slate-400">Elige tu versión para conectar.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Option A -->
-                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-neon-cyan transition text-center cursor-pointer">
+                    <div class="bg-profondo/60 p-6 rounded-xl border border-white/5 hover:border-digitale transition text-center cursor-pointer">
                         <div class="text-4xl mb-4">🏠</div>
-                        <h4 class="text-xl font-bold text-white">Versión Hogar</h4>
-                        <button class="w-full bg-neon-cyan hover:bg-cyan-300 text-black font-bold py-3 px-4 rounded-lg mb-4 transition" 
+                        <h4 class="text-xl font-bold text-white mb-4">Versión Hogar</h4>
+                        <button class="w-full bg-digitale hover:bg-cielo text-notte font-bold py-3 px-4 rounded-lg mb-4 transition"
                                 onclick="window.open('https://app.ventanaceleste.com', '_blank')">
                             CONECTAR
                         </button>
-                        <a href="#" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-neon-cyan block">
+                        <a href="#" onclick="closeAppModal()" class="text-xs text-slate-500 underline hover:text-digitale block">
                             ¿No tienes telescopio? <br>Mira cómo construirlo aquí (Próximamente...)
                         </a>
                     </div>
-                    <!-- Option B -->
-                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 hover:border-purple-500 transition text-center cursor-pointer">
+                    <div class="bg-profondo/60 p-6 rounded-xl border border-white/5 hover:border-stella transition text-center cursor-pointer">
                         <div class="text-4xl mb-4">🏫</div>
-                        <h4 class="text-xl font-bold text-white">Versión Colegio</h4>
-                        <button class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded-lg mb-4 transition">
+                        <h4 class="text-xl font-bold text-white mb-4">Versión Colegio</h4>
+                        <button class="w-full bg-stella hover:bg-crema text-notte font-bold py-3 px-4 rounded-lg mb-4 transition">
                             PRÓXIMAMENTE...
                         </button>
-                        <a href="#" onclick="closeAppModal()" class="text-xs text-gray-500 underline hover:text-purple-400 block">
+                        <a href="#" onclick="closeAppModal()" class="text-xs text-slate-500 underline hover:text-stella block">
                             ¿Tu colegio no tiene el kit? <br>Descarga los planos aquí (Próximamente...)
                         </a>
                     </div>
                 </div>
-                <button onclick="closeAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
+                <button onclick="closeAppModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
             </div>
         </div>
     </div>
 
     <!-- MUSEUM CONTACT MODAL -->
     <div id="museumModal" class="fixed inset-0 z-[60] hidden">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeMuseumModal()"></div>
+        <div class="absolute inset-0 bg-profondo/90 backdrop-blur-sm" onclick="closeMuseumModal()"></div>
         <div class="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
-            <div class="bg-space-800 border border-white/10 rounded-2xl max-w-lg w-full p-8 shadow-2xl overflow-y-auto max-h-screen no-scrollbar">
-                
+            <div class="bg-notte border border-white/10 rounded-2xl max-w-lg w-full p-8 shadow-2xl overflow-y-auto max-h-screen no-scrollbar">
+
                 <div class="text-center mb-6">
-                    <span class="text-purple-400 text-xs font-bold tracking-widest uppercase">Institucional</span>
+                    <span class="text-stella text-xs font-bold tracking-[0.25em] uppercase">★ Institucional</span>
                     <h3 class="text-2xl font-bold text-white mt-2">Lleva Ventana Celeste a tu Museo</h3>
                 </div>
 
                 <div id="museum-form-confirmation" class="hidden text-center py-10">
                      <h3 class="text-xl font-bold text-white">¡Solicitud Enviada!</h3>
-                     <p class="text-gray-400">El equipo de integración te contactará.</p>
-                     <button onclick="closeMuseumModal()" class="mt-4 text-neon-cyan hover:underline">Cerrar</button>
+                     <p class="text-slate-400">El equipo de integración te contactará.</p>
+                     <button onclick="closeMuseumModal()" class="mt-4 text-digitale hover:underline">Cerrar</button>
                 </div>
 
                 <form id="museum-contact-form" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" name="entry.952217186" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Nombre Completo</label>
+                        <input type="text" name="entry.952217186" required class="w-full bg-profondo/70 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-stella transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Correo Institucional</label>
-                        <input type="email" name="entry.1988284086" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Correo Institucional</label>
+                        <input type="email" name="entry.1988284086" required class="w-full bg-profondo/70 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-stella transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Institución</label>
-                        <input type="text" name="entry.266045146" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition">
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Institución</label>
+                        <input type="text" name="entry.266045146" required class="w-full bg-profondo/70 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-stella transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Mensaje</label>
-                        <textarea name="entry.1929946945" rows="3" required class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition"></textarea>
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Mensaje</label>
+                        <textarea name="entry.1929946945" rows="3" required class="w-full bg-profondo/70 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-stella transition"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition mt-4 flex items-center justify-center">
+                    <button type="submit" class="w-full bg-stella text-notte font-bold py-3 rounded-lg hover:bg-crema transition mt-4 flex items-center justify-center">
                         <span id="museum-btn-text">ENVIAR SOLICITUD</span>
-                        <div id="museum-btn-loader" class="loader hidden ml-2 border-slate-600 border-t-black"></div>
+                        <div id="museum-btn-loader" class="loader hidden ml-2"></div>
                     </button>
                 </form>
 
-                <button onclick="closeMuseumModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
+                <button onclick="closeMuseumModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
             </div>
         </div>
     </div>
@@ -445,7 +449,7 @@
         function closeAppModal() { appModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
         function openMuseumModal() { museumModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
         function closeMuseumModal() { museumModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        
+
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") { closeAppModal(); closeMuseumModal(); }
         });
@@ -461,44 +465,36 @@
                     return response.json();
                 })
                 .then(articles => {
-                    /* ORDENADO POR ORDEN EN JSON */
-                    // // Invertir orden (último primero)
-                    // const reversedArticles = articles.reverse();
-
-                    /* ODERNADO POR FECHA */
                     const reversedArticles = articles.sort((a, b) => {
                         const dateA = new Date(a.publishDate.split('/').reverse().join('-'));
                         const dateB = new Date(b.publishDate.split('/').reverse().join('-'));
-                        return dateB - dateA; // Descendente
+                        return dateB - dateA;
                     });
-                    
-                    // Mostrar solo los primeros 4
+
                     const previewArticles = reversedArticles.slice(0, 4);
-                    
-                    container.innerHTML = ''; // Limpiar loader
+                    container.innerHTML = '';
 
                     previewArticles.forEach(article => {
-                        // Limpiar extensión .md para la URL amigable
                         const slug = article.source.split('/').pop().replace('.md', '');
-                        
+
                         const card = document.createElement('div');
-                        card.className = "group relative bg-space-700 rounded-xl overflow-hidden border border-white/5 hover:border-neon-cyan/50 transition-all duration-300 hover:-translate-y-1 shadow-lg";
+                        card.className = "group relative bg-notte rounded-xl overflow-hidden border border-white/5 hover:border-digitale/50 transition-all duration-300 hover:-translate-y-1 shadow-lg";
                         card.innerHTML = `
                             <a href="articles.html?article=${slug}" class="block h-full">
-                                <div class="h-48 overflow-hidden">
-                                    <img src="${article.coverImg}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+                                <div class="article-cover h-48 overflow-hidden">
+                                    <img src="${article.coverImg}" alt="" aria-hidden="true" class="cover-bg">
+                                    <img src="${article.coverImg}" alt="${article.title}" class="cover-fg group-hover:scale-105 transition duration-500">
                                 </div>
                                 <div class="p-6">
-                                    <div class="text-[10px] font-bold text-neon-cyan/60 uppercase tracking-[0.2em] mb-2">${article.publishDate || ''}</div>
-                                    <h3 class="text-lg font-bold text-white group-hover:text-neon-cyan transition leading-tight mb-2">${article.title}</h3>
-                                    <span class="text-xs text-gray-500 uppercase tracking-widest">Leer más &rarr;</span>
+                                    <div class="text-[10px] font-bold text-digitale/70 uppercase tracking-[0.2em] mb-2">${article.publishDate || ''}</div>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-digitale transition leading-tight mb-2">${article.title}</h3>
+                                    <span class="text-xs text-stella/80 uppercase tracking-widest">Leer más &rarr;</span>
                                 </div>
                             </a>
                         `;
                         container.appendChild(card);
                     });
 
-                    // Si hay más de 4, mostrar botón "Ver todas"
                     if (reversedArticles.length > 4) {
                         viewAllBtn.classList.remove('hidden');
                     }
@@ -507,15 +503,14 @@
                     console.error('Error cargando noticias:', error);
                     container.innerHTML = `
                         <div class="col-span-full text-center p-8 bg-white/5 rounded-lg border border-red-500/30">
-                            <p class="text-gray-400">No hay noticias disponibles por el momento.</p>
-                            <small class="text-gray-600">${error.message}</small>
+                            <p class="text-slate-400">No hay noticias disponibles por el momento.</p>
+                            <small class="text-slate-600">${error.message}</small>
                         </div>
                     `;
                 });
         });
 
         // --- GOOGLE FORMS LOGIC ---
-        // Función genérica para enviar forms
         function setupGoogleForm(formId, confirmationId, btnTextId, loaderId, googleFormUrl) {
             const form = document.getElementById(formId);
             const confirmation = document.getElementById(confirmationId);
@@ -526,20 +521,18 @@
 
             form.addEventListener("submit", function(e) {
                 e.preventDefault();
-                
-                // UI Loading state
+
                 btnText.style.display = "none";
                 loader.style.display = "block";
-                
+
                 const formData = new FormData(form);
 
                 fetch(googleFormUrl, {
                     method: "POST",
                     body: formData,
-                    mode: "no-cors" // Importante para Google Forms
+                    mode: "no-cors"
                 })
                 .then(() => {
-                    // Success UI
                     form.style.display = "none";
                     confirmation.style.display = "block";
                     form.reset();
@@ -547,21 +540,16 @@
                 .catch(err => {
                     console.error("Error:", err);
                     alert("Hubo un error al enviar. Por favor intenta nuevamente.");
-                    // Restore UI
                     btnText.style.display = "block";
                     loader.style.display = "none";
                 });
             });
         }
 
-        // Configurar Formulario Principal
         const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/1XYRpn6LxSmZ79nBlTwneSAWAj7mx0XDfJ6g4XkfpBbE/formResponse";
-        
-        setupGoogleForm("main-contact-form", "main-form-confirmation", "main-btn-text", "main-btn-loader", GOOGLE_FORM_URL);
-        
-        // Configurar Formulario Museo (Podría ser el mismo URL o uno diferente)
-        setupGoogleForm("museum-contact-form", "museum-form-confirmation", "museum-btn-text", "museum-btn-loader", GOOGLE_FORM_URL);
 
+        setupGoogleForm("main-contact-form", "main-form-confirmation", "main-btn-text", "main-btn-loader", GOOGLE_FORM_URL);
+        setupGoogleForm("museum-contact-form", "museum-form-confirmation", "museum-btn-text", "museum-btn-loader", GOOGLE_FORM_URL);
     </script>
 </body>
 </html>
